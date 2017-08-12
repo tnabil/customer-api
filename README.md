@@ -20,17 +20,17 @@ One of the API use cases allows consumers to maintain a local copy of the custom
 #### Selected Solution
 The selected solution, although a bit more complex, is the most robust and puts the least load on the server. It involves:
 * Maintaining changes to the customer data on the server as a series of events (CustomerCreated and CustomerUpdated). For more complex data structures, more fine-grained events can be used, but these two simple events will suffice for this example. Note that if the system was not designed in this manner from the start, creating a set of initial CustomerCreated events from existing data should still be straightforward.
-* Expose an "events" API that would be used by the consumer to pull changes to the data every few minutes.
+* Expose an `events` API that would be used by the consumer to pull changes to the data every few minutes.
 * A consumer does not need to pull an initial snapshot of the data separately since it can page through the changes in reverse-chronological order until it has consumed all the events. This approach is similar to the one used in the Twitter timeline API.
 * Every event would have an id that increases chronologically. A consumer uses the following parameters when requesting change events:
-** count - the number of events to return. When requesting the first batch, the consumer would only use this parameter.
-** max_id - the maximum id of the events to return. The consumer would use that to retrieve the batch prior to the last one they retrieved. This is how a consumer would iterate through the batches until they have retrieved the full customer list.
-** since_id - the consumer would use this parameter to request the latest changes that occurred since the last event they received. The consumer would use that when making the call every 5 minutes.
+    * `count` - the number of events to return. When requesting the first batch, the consumer would only use this parameter.
+    * `max_id` - the maximum id of the events to return. The consumer would use that to retrieve the batch prior to the last one they retrieved. This is how a consumer would iterate through the batches until they have retrieved the full customer list.
+    * `since_id` - the consumer would use this parameter to request the latest changes that occurred since the last event they received. The consumer would use that when making the call every 5 minutes.
 * To recap, a consumer using the API for the first time, would perform the following steps:
-** Make an initial call to the events API to retrieve the latest set of events.
-** Continue to iterate through the event list using the max_id parameter until all events have been consumed.
-** At that point, the consumer has retrieved the full list of customers as of a certain point in time.
-** From that point onwards, the consumer would call the API periodically using the since_id parameter to retrieve the latest change events.
+    * Make an initial call to the events API to retrieve the latest set of events.
+    * Continue to iterate through the event list using the max_id parameter until all events have been consumed.
+    * At that point, the consumer has retrieved the full list of customers as of a certain point in time.
+    * From that point onwards, the consumer would call the API periodically using the since_id parameter to retrieve the latest change events.
 ##### Related Decisions
 * During the initial load, and regardless of the direction in which the consumer iterates through the list, as long as the server is not maintaining any information about the consumer, it's inevitable that the consumer would retrieve duplicate events. For example, if a customer is updated more than once, the consumer only needs to retrieve the latest state of the customer once, not for every time it changed. To reduce this overhead, the events API will not return the actual data. Rather it will only return the event type (crate or update), the customer id and the version of the customer after the event. Since the consumer will iterate through the list in reverse-chronological order, in the case of a duplicate event, the version of the customer internally stored by the consumer will be higher than the version in the event. In this case, the consumer will ignore that event. If the consumer does not have the customer, then it will request the latest version of the customer separately.
-* In order to optimise the retrieval of multiple customers and to reduce network round trips, we will allow the retrieval of multiple customers in a single call using the "ids" query parameter that will have a comma-separated list of ids.
+* In order to optimise the retrieval of multiple customers and to reduce network round trips, we will allow the retrieval of multiple customers in a single call using the `ids` query parameter that will have a comma-separated list of ids.
