@@ -1,0 +1,114 @@
+#%RAML 1.0
+securitySchemes:
+  basicAuth:
+    type: Basic Authentication
+    describedBy:
+      headers:
+        Authorization:
+          type: string
+      responses:
+        401:
+          description: |
+            Uauthorized. Either credentials have not
+            been provided or they're incorrect
+        403:
+          description: |
+            Authentication successful but user is
+            not allowed access to the resource
+title: Customer API
+version: v1
+baseUri: http://api.example.com/{version}
+mediaType:
+  - application/json
+protocols:
+  - HTTPS
+types:
+  Address:
+    type: object
+    properties:
+      id: string
+      line1: string
+      line2: string
+      postCode: number
+      city: string
+      state: string
+  Customer:
+    type: object
+    properties:
+      id: string
+      firstName: string
+      lastName: string
+      phone: string
+      addresses:
+        type: array
+        items: Address
+  FieldError:
+    type: object
+    properties:
+      code: number
+      field: string
+      message: string
+  Error:
+    type: object
+    properties:
+      code: number
+      message: string
+      errors?:
+        type: array
+        items: FieldError
+/customers:
+  get:
+    responses:
+      200:
+        description: |
+          Returns the customers matching the filtering
+          criteria provided. Supports two sets of filters:
+          1. ids: To retrieve particular customers by their ids.
+          2. Field filters: To search for customers using their
+          firstName, lastName or phone.
+    queryParameters:
+      ids?:
+        type: string
+        description: |
+          A comma separated list of customer ids to retrieve.
+          The customers will be returned in the same order as
+          the provided ids. If any of the ids does not exist, it
+          will be ignored. The maximum number of ids that can
+          be provided is 100.
+          If this parameter is provided, then none of the other
+          filtering parameters can be used.
+          This mode of querying customers is used along with
+          the events API to retrieve an initial set of customer
+          data to load into the consumer's system.
+      firstName?: string
+      lastName?: string
+      phone?: string
+      order?:
+        type: string
+        description: |
+          The field used to order the search results.
+          Defaults to lastName if not provided.
+      pageSize?:
+        type: number
+        description: |
+          The number of results to return. Defaults to
+          50 if not provided.
+      page?:
+        type: number
+        description: |
+          The page number to return. Defaults to 1 if not
+          provided. If the value is greater than the last
+          page number, then the last page is returned.
+      include?:
+        type: string
+        description: |
+          A comma-separated list of the customers fields to
+          include in the returned customer objects.
+          If not provided, all fields are returned.
+      exclude?:
+        type: string
+        description: |
+          A comma-separated list of customer fields to
+          exclude. If not provided, all fields are returned.
+        example: addresses
+  post:
