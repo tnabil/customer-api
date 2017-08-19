@@ -1,0 +1,30 @@
+#%RAML 1.0 Trait
+usage: |
+  Apply this trait to a GET method that supports content-based caching using
+  ETags
+headers:
+  If-None-Match?:
+    type: string
+    description: |
+      Requests the resource only if its version (previously returned in the ETag
+      header) is different than the one provided in this header.
+      If the resource has not been modified (it still has the same version),
+      then HTTP status code '304 Not Modified' (with empty body) will be returned
+      instead of the actual resource.
+    example: "1236"
+responses:
+  200:
+    description: |
+      The resource has been modified. The body contains the new resource.
+    headers:
+      ETag:
+        type: string
+        example: "4568"
+  304:
+    description: |
+      The resource has not been modified, the body is empty and the version
+      cached by the API consumer client may be used.
+    headers:
+      ETag:
+        type: string
+        example: "56"

@@ -1,0 +1,41 @@
+#%RAML 1.0 Library
+
+types:
+  Resource:
+    type: object
+    properties:
+      id: string
+      lastModified: datetime
+  Collection:
+    type: Resource[]
+  FieldError:
+    type: object
+    properties:
+      code: number
+      field: string
+      message: string
+  Error:
+    type: object
+    properties:
+      code: number
+      message: string
+      fieldErrors?:
+        type: array
+        items: FieldError
+  ResourceLink:
+    properties:
+      href: string
+      rel: string
+      label?: string
+  GetResponse:
+    properties:
+      error?: Error
+      links: ResourceLink[]
+  GetResourceResponse:
+    type: GetResponse
+    properties:
+      data?: Resource
+  GetCollectionResponse:
+    type: GetResponse
+    properties:
+      data?: Collection

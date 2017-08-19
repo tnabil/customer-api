@@ -1,61 +1,16 @@
 #%RAML 1.0
 securitySchemes:
-  basicAuth:
-    type: Basic Authentication
-    describedBy:
-      headers:
-        Authorization:
-          type: string
-      responses:
-        401:
-          description: |
-            Uauthorized. Either credentials have not
-            been provided or they're incorrect
-        403:
-          description: |
-            Authentication successful but user is
-            not allowed access to the resource
-title: Customer API
+  basicAuth: !include ./securitySchemes/basic-auth.raml
+title: Example API
 version: v1
 baseUri: http://api.example.com/{version}
-mediaType:
-  - application/json
-protocols:
-  - HTTPS
+documentation:
+  - title: Introduction
+    content: TODO
+mediaType: application/json
+protocols: HTTPS
+securedBy: basicAuth
 types:
-  Address:
-    type: object
-    properties:
-      id: string
-      line1: string
-      line2: string
-      postCode: number
-      city: string
-      state: string
-  Customer:
-    type: object
-    properties:
-      id: string
-      firstName: string
-      lastName: string
-      phone: string
-      addresses:
-        type: array
-        items: Address
-  FieldError:
-    type: object
-    properties:
-      code: number
-      field: string
-      message: string
-  Error:
-    type: object
-    properties:
-      code: number
-      message: string
-      errors?:
-        type: array
-        items: FieldError
 /customers:
   get:
     responses:

@@ -1,0 +1,18 @@
+#%RAML 1.0 SecurityScheme
+type: Basic Authentication
+description: |
+  API supports Basic Authentication security policy for all
+  operations
+describedBy:
+  headers:
+    Authorization:
+      type: string
+      example: Basic dXNlcm5hbWU6cGFzc3dvcmQ= # username:password
+  responses:
+    401:
+      description: |
+        Uauthorized. Either credentials have not been provided or they're
+        incorrect.
+    403:
+      description: |
+        Forbidden. User is not allowed access to the resource.

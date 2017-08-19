@@ -1,0 +1,15 @@
+#%RAML 1.0 Trait
+usage: |
+  Apply this trait to a collection GET method that supports paging over a
+  collection of resources
+queryParameters:
+  pageIndex:
+    type: integer
+    default: 0
+    example: 1
+    required: false
+  pageSize:
+    type: integer
+    default: 10
+    example: 10
+    required: false
