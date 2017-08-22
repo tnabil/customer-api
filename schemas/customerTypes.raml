@@ -1,0 +1,47 @@
+#%RAML 1.0 Library
+usage: Types for customer resources
+
+uses:
+  bt: baseTypes.raml
+
+types:
+  Address:
+    type: bt.Resource
+    properties:
+      id?: string
+      line1: string
+      line2?: string
+      postCode: number
+      city: string
+      state: string
+  Customer:
+    type: bt.Resource
+    properties:
+      firstName: string
+      lastName: string
+      phone: string
+      addresses?: Address[]
+  GetCustomerResponse:
+    type: bt.GetResourceResponse
+    properties:
+      data: Customer
+  GetCustomersResponse:
+    type: bt.GetCollectionResponse
+    properties:
+      data: Customer[]
+  PostCustomerRequest:
+    type: Customer
+  PutCustomerRequest:
+    type: Customer
+  GetAddressesResponse:
+    type: bt.GetCollectionResponse
+    properties:
+      data: Address[]
+  GetAddressResponse:
+    type: bt.GetResourceResponse
+    properties:
+      data: Address
+  PostAddressRequest:
+    type: Address
+  PutAddressRequest:
+    type: Address

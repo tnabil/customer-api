@@ -1,0 +1,47 @@
+#%RAML 1.0 ResourceType
+
+uses:
+  bt: ../schemas/baseTypes.raml
+
+description: Collection of available <<resourcePathName>>
+get:
+  description: Get a list of <<resourcePathName>>, optionally filtered.
+  responses:
+    200:
+      description: Collection returned
+      headers:
+        Last-Modified:
+          description: The last date at which the collection was modified.
+          type: datetime
+          format: rfc2616
+      body:
+        application/json:
+          type: <<getResponseType>>
+    500:
+      description: Internal server error
+      body:
+        application/json:
+          type: bt.Error
+
+post?:
+  description: Create a new <<resourcePathName | !singularize>>
+  body:
+    type: <<postRequestType>>
+  responses:
+    201:
+      description: Created!
+      headers:
+        Location:
+          description: URI of new resource
+          type: string
+          required: true
+    400:
+      description: Bad request
+      body:
+        application/json:
+          type: bt.Error
+    500:
+      description: Internal server error
+      body:
+        application/json:
+          type: bt.Error

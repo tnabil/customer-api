@@ -1,7 +1,7 @@
 #%RAML 1.0 Trait
 usage: |
-  Apply this trait to a GET method that supports content-based caching using
-  ETags
+  Apply this trait to a member GET method that supports content-based caching
+  using ETags
 headers:
   If-None-Match?:
     type: string
@@ -18,6 +18,7 @@ responses:
       The resource has been modified. The body contains the new resource.
     headers:
       ETag:
+        description: Identifies the version of the returned entity
         type: string
         example: "4568"
   304:

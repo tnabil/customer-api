@@ -1,0 +1,35 @@
+#%RAML 1.0 ResourceType
+
+uses:
+  bt: ../schemas/baseTypes.raml
+
+description: Entity representing a <<resourcePathName|!singularize>>
+get:
+  description: |
+    Get the <<resourcePathName|!singularize>> with
+    <<resourcePathName|!singularize>>Id = {<<resourcePathName|!singularize>>Id}
+  responses:
+    200:
+      headers:
+        ETag:
+          description: Identifies the version of the returned entity
+put?:
+  body:
+    application/json:
+      type: <<putRequestType>>
+  responses:
+    204:
+      description: Modified
+patch?:
+  description: |
+    Modify part of the <<resourcePathName|!singularize>>
+  body:
+    application/json:
+      type: bt.JsonPatchRequest
+delete?:
+  description: |
+    Deletes the <<resourcePathName|!singularize>> with
+    <<resourcePathName|!singularize>>Id = {<<resourcePathName|!singularize>>Id}
+  responses:
+    204:
+      description: Deleted

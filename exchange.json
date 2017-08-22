@@ -1,0 +1,6 @@
+{
+  "main": "raml-api.raml",
+  "name": "raml-api",
+  "classifier": "raml",
+  "tags": []
+}

@@ -1,0 +1,57 @@
+#%RAML 1.0 Library
+usage: Base types for all resources
+
+types:
+  FieldError:
+    type: object
+    properties:
+      code: number
+      field: string
+      message: string
+  Error:
+    type: object
+    properties:
+      code: number
+      message: string
+      fieldErrors?:
+        type: array
+        items: FieldError
+  Pagination:
+    type: object
+    properties:
+      pageIndex: integer
+      pageSize: integer
+      total: integer
+  Resource:
+    type: object
+    properties:
+      id?: string
+      lastModified?: datetime
+  Collection:
+    type: Resource[]
+  ResourceLink:
+    properties:
+      href: string
+      rel: string
+      label?: string
+  GetResponse:
+    properties:
+      links: ResourceLink[]
+  GetResourceResponse:
+    type: GetResponse
+    properties:
+      data: Resource
+  GetCollectionResponse:
+    type: GetResponse
+    properties:
+      pagination?: Pagination
+      data: Collection
+  JsonPatchInstruction:
+    description: A single instruction in a JSON Patch request
+    properties:
+      op: string
+      path: string
+      value: string
+  JsonPatchRequest:
+    description: A standard Patch request for any entity
+    type: JsonPatchInstruction[]

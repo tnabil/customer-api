@@ -1,11 +1,11 @@
 #%RAML 1.0 Trait
 usage: |
-  Apply this trait to a collection GET method that supports paging over a
-  collection of resources
+  Apply this trait to a collection GET method that supports sorting based on
+  one ore more fields.
   queryParameters:
     sortBy:
       description: |
-        Comma-separated list of fields to order the results by. A minus
+        Comma-separated list of fields to sort the results by. A minus
         sign preceding the field name indicates descending order.
       type: string
       required: false

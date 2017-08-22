@@ -1,17 +1,14 @@
 #%RAML 1.0 Trait
 usage: |
-  Apply this trait to a collection GET method that supports paging over a
-  collection of resources
-  queryParameters:
-    name:
-      type: string
-      required: false
-      example: Deep Steep Honey Bubble Bath
-    type:
-      type: string
-      required: false
-      example: Oils
-    brand:
-      type: string
-      required: false
-      example: Naturtint
+  Apply this trait to a collection GET method that supports searching
+  a collection of resources
+
+queryParameters:
+  q:
+    description: |
+      A search query consisting of a comma-separated list of (field=value)
+      terms. Values can contain asterisks for partial matching. String values
+      can be quoted and date values should be in ISO format.
+
+    required: false
+    example: firstName='John',lastName='Sm*',dateOfBirth=19900912

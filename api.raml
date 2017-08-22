@@ -1,69 +1,63 @@
 #%RAML 1.0
 securitySchemes:
-  basicAuth: !include ./securitySchemes/basic-auth.raml
-title: Example API
+  basicAuth: !include ./securitySchemes/basicAuth.raml
+title: Example API illustrating RAML best practices
 version: v1
 baseUri: http://api.example.com/{version}
-documentation:
-  - title: Introduction
-    content: TODO
+
 mediaType: application/json
 protocols: HTTPS
 securedBy: basicAuth
-types:
+
+uses:
+  resType: resourceTypes/resourceTypes.lib.raml
+  cusType: schemas/customerTypes.raml
+  tr: traits/traits.lib.raml
+
 /customers:
+  type:
+    {
+      resType.collection: {
+        "getResponseType": "cusType.GetCustomersResponse",
+        "postRequestType": "cusType.PostCustomerRequest",
+      }
+    }
   get:
-    responses:
-      200:
-        description: |
-          Returns the customers matching the filtering
-          criteria provided. Supports two sets of filters:
-          1. ids: To retrieve particular customers by their ids.
-          2. Field filters: To search for customers using their
-          firstName, lastName or phone.
-    queryParameters:
-      ids?:
-        type: string
-        description: |
-          A comma separated list of customer ids to retrieve.
-          The customers will be returned in the same order as
-          the provided ids. If any of the ids does not exist, it
-          will be ignored. The maximum number of ids that can
-          be provided is 100.
-          If this parameter is provided, then none of the other
-          filtering parameters can be used.
-          This mode of querying customers is used along with
-          the events API to retrieve an initial set of customer
-          data to load into the consumer's system.
-      firstName?: string
-      lastName?: string
-      phone?: string
-      order?:
-        type: string
-        description: |
-          The field used to order the search results.
-          Defaults to lastName if not provided.
-      pageSize?:
-        type: number
-        description: |
-          The number of results to return. Defaults to
-          50 if not provided.
-      page?:
-        type: number
-        description: |
-          The page number to return. Defaults to 1 if not
-          provided. If the value is greater than the last
-          page number, then the last page is returned.
-      include?:
-        type: string
-        description: |
-          A comma-separated list of the customers fields to
-          include in the returned customer objects.
-          If not provided, all fields are returned.
-      exclude?:
-        type: string
-        description: |
-          A comma-separated list of customer fields to
-          exclude. If not provided, all fields are returned.
-        example: addresses
+    is: [tr.pageable, tr.searchable, tr.sortable, tr.syncable]
   post:
+  /{customerId}:
+    type:
+      {
+        resType.member: {
+          "putRequestType" : "cusType.PutCustomerRequest"
+        }
+      }
+    get:
+      is: [tr.cacheable]
+    put:
+    patch:
+    delete:
+    /addresses:
+      type:
+        {
+          resType.collection: {
+            "getResponseType": "cusType.GetAddressesResponse",
+            "postRequestType": "cusType.PostAddressRequest",
+          }
+        }
+      get:
+        is: [ tr.sortable ]
+      post:
+        description: Adds a new address to the customer
+      /{addressId}:
+        type:
+          {
+            resType.member: {
+              "putRequestType" : "cusType.PutAddressRequest"
+            }
+          }
+        get:
+          is: [ tr.cacheable ]
+        put:
+        patch:
+        delete:

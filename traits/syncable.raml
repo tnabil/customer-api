@@ -1,0 +1,19 @@
+#%RAML 1.0 Trait
+usage: |
+  Apply this trait to a collection GET method that supports syncing of changes
+  to the collection by consumers
+
+queryParameters:
+  since:
+    description: |
+      A date value in the same format as the "Last-Modified" date header that
+      will filter the collection to return only entities that have been modified
+      since that date.
+
+      Consumers should use the value returned by the server in the "Last-Modified"
+      header in the response to a previous call to the GET method.
+
+    type: datetime
+    format: rfc2616
+    required: false
+    example: Sun, 28 Feb 2016 16:41:41 GMT
