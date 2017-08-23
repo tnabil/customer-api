@@ -1,0 +1,108 @@
+{
+  "links": [{
+      "href": "http://api.example.com/v1/customers?pageIndex=1&pageSize=5&expand=addresses",
+      "rel": "first"
+    },
+    {
+      "href": "http://api.example.com/v1/customers?pageIndex=2&pageSize=5&expand=addresses",
+      "rel": "prev"
+    },
+    {
+      "href": "http://api.example.com/v1/customers?pageIndex=3&pageSize=5&expand=addresses",
+      "rel": "self"
+    },
+    {
+      "href": "http://api.example.com/v1/customers?pageIndex=4&pageSize=5&expand=addresses",
+      "rel": "next"
+    },
+    {
+      "href": "http://api.example.com/v1/customers?pageIndex=2013&pageSize=5&expand=addresses",
+      "rel": "last"
+    }
+  ],
+  "pagination": {
+    "pageIndex": 3,
+    "pageSize": 5,
+    "total": 10063
+  },
+  "data": [{
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "firstName": "John",
+      "lastName": "Smith",
+      "phone": "0412345678",
+      "addresses": [{
+        "id": "183100e3-0e2b-4404-a716-66104d440550",
+        "line1": "5 George St",
+        "line2": "",
+        "postCode": 2000,
+        "city": "Sydney",
+        "state": "NSW"
+      }]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-112233440000",
+      "firstName": "Michael",
+      "lastName": "Black",
+      "phone": "0432445678",
+      "addresses": [{
+        "id": "183100e3-0e2b-4404-a716-66104d440880",
+        "line1": "55 Pitt St",
+        "line2": "",
+        "postCode": 2000,
+        "city": "Sydney",
+        "state": "NSW"
+      }]
+    },
+    {
+      "id": "550e6600-e29b-41c2-a716-112233440000",
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "phone": "0434444678",
+      "addresses": [{
+          "id": "286100e3-0e2b-4404-a716-66104d440770",
+          "line1": "McKell Building",
+          "line2": "5 Willington St",
+          "postCode": 2000,
+          "city": "Sydney",
+          "state": "NSW"
+        },
+        {
+          "id": "286100e3-0e2b-4404-a716-661041234567",
+          "line1": "5 Lane Pde",
+          "line2": "",
+          "postCode": 3000,
+          "city": "Melbourne",
+          "state": "VIC"
+        }
+      ]
+    },
+    {
+      "id": "123e9999-e29b-41d4-a716-998877440000",
+      "firstName": "Alan",
+      "lastName": "White",
+      "phone": "0466665678",
+      "addresses": [{
+        "id": "183100e3-0e2b-4404-a716-66104d440880",
+        "line1": "56 Adam St",
+        "line2": "",
+        "postCode": 2102,
+        "city": "Sydney",
+        "state": "NSW"
+      }]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-112233440000",
+      "firstName": "John",
+      "lastName": "McCain",
+      "phone": "0432499998",
+      "addresses": [{
+        "id": "184444e6-0e2b-4404-a716-99994d440880",
+        "line1": "101 Hume St",
+        "line2": "",
+        "postCode": 2170,
+        "city": "Sydney",
+        "state": "NSW"
+      }]
+    }
+  ]
+}

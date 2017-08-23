@@ -13,6 +13,9 @@ get:
       headers:
         ETag:
           description: Identifies the version of the returned entity
+      body:
+        application/json:
+          type: <<getResponseType>>
 put?:
   body:
     application/json:
