@@ -16,6 +16,12 @@ get:
       body:
         application/json:
           type: <<getResponseType>>
+    404:
+      description: Not found
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml
 put?:
   body:
     application/json:
@@ -23,12 +29,51 @@ put?:
   responses:
     204:
       description: Modified
+    400:
+      description: Bad request
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml
+    404:
+      description: Not found
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml
+    500:
+      description: Internal server error
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml
 patch?:
   description: |
     Modify part of the <<resourcePathName|!singularize>>
   body:
     application/json:
       type: bt.JsonPatchRequest
+  responses:
+    204:
+      description: Modified
+    400:
+      description: Bad request
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml
+    404:
+      description: Not found
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml
+    500:
+      description: Internal server error
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml
 delete?:
   description: |
     Deletes the <<resourcePathName|!singularize>> with
@@ -36,3 +81,21 @@ delete?:
   responses:
     204:
       description: Deleted
+    400:
+      description: Bad request
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml
+    404:
+      description: Not found
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml
+    500:
+      description: Internal server error
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml

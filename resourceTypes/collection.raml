@@ -41,8 +41,10 @@ post?:
       body:
         application/json:
           type: bt.Error
+          example: !include ../examples/error.raml
     500:
       description: Internal server error
       body:
         application/json:
           type: bt.Error
+          example: !include ../examples/error.raml
