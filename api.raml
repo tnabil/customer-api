@@ -19,85 +19,57 @@ uses:
     {
       resType.collection: {
         getResponseType: cusType.GetCustomersResponse,
-        postRequestType: cusType.PostCustomerRequest
+        postRequestType: cusType.PostCustomerRequest,
+        getResponseExample: !include examples/getCustomersResponse.json,
+        postRequestExample: !include examples/postCustomerRequest.json
       }
     }
   get:
     is: [ tr.pageable, tr.searchable, tr.sortable, tr.syncable, tr.expandable ]
-    responses:
-      200:
-        body:
-          application/json:
-            example: !include examples/getCustomersResponse.json
   post:
-    body:
-      application/json:
-        example: !include examples/postCustomerRequest.json
   /{customerId}:
     type:
       {
         resType.member: {
           getResponseType: cusType.GetCustomerResponse,
-          putRequestType : cusType.PutCustomerRequest
+          putRequestType : cusType.PutCustomerRequest,
+          getResponseExample: !include examples/getCustomerResponse.json,
+          putRequestExample: !include examples/putCustomerRequest.json,
+          patchRequestExample: !include examples/patchCustomerRequest.raml
         }
       }
     get:
       is: [tr.cacheable, tr.expandable]
-      responses:
-        200:
-          body:
-            application/json:
-              example: !include examples/getCustomerResponse.json
     put:
-      body:
-        application/json:
-          example: !include examples/putCustomerRequest.json
     patch:
-      body:
-        application/json:
-          example: !include examples/patchCustomerRequest.raml
     delete:
     /addresses:
       type:
         {
           resType.collection: {
-            "getResponseType": "cusType.GetAddressesResponse",
-            "postRequestType": "cusType.PostAddressRequest"
+            getResponseType: cusType.GetAddressesResponse,
+            postRequestType: cusType.PostAddressRequest,
+            getResponseExample: !include examples/getAddressesResponse.json,
+            postRequestExample: !include examples/postAddressRequest.json
           }
         }
       get:
         is: [ tr.sortable ]
-        responses:
-          200:
-            body:
-              application/json:
-                example: !include examples/getAddressesResponse.json
       post:
         description: Adds a new address to the customer
-        body:
-          application/json:
-            example: !include examples/postAddressRequest.json
       /{addressId}:
         type:
           {
             resType.member: {
-              "getResponseType": "cusType.GetAddressResponse",
-              "putRequestType" : "cusType.PutAddressRequest"
+              getResponseType: cusType.GetAddressResponse,
+              putRequestType : cusType.PutAddressRequest,
+              getResponseExample: !include examples/getAddressResponse.json,
+              putRequestExample: !include examples/putAddressRequest.json,
+              patchRequestExample: !include examples/patchAddressRequest.raml
             }
           }
         get:
           is: [ tr.cacheable ]
-          responses:
-            200:
-              body:
-                application/json:
-                  example: !include examples/getAddressResponse.json
         put:
-          body:
-            application/json:
-              example: !include examples/putAddressRequest.json
         patch:
-          body:
-            application/json:
-              example: !include examples/patchAddressRequest.raml
         delete:

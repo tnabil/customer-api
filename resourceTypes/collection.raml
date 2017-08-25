@@ -17,6 +17,7 @@ get:
       body:
         application/json:
           type: <<getResponseType>>
+          example: <<getResponseExample>>
     500:
       description: Internal server error
       body:
@@ -27,7 +28,9 @@ get:
 post?:
   description: Create a new <<resourcePathName | !singularize>>
   body:
-    type: <<postRequestType>>
+    application/json:
+      type: <<postRequestType>>
+      example: <<postRequestExample>>
   responses:
     201:
       description: Created!

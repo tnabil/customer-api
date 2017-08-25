@@ -16,6 +16,7 @@ get:
       body:
         application/json:
           type: <<getResponseType>>
+          example: <<getResponseExample>>
     404:
       description: Not found
       body:
@@ -26,6 +27,7 @@ put?:
   body:
     application/json:
       type: <<putRequestType>>
+      example: <<putRequestExample>>
   responses:
     204:
       description: Modified
@@ -53,6 +55,7 @@ patch?:
   body:
     application/json:
       type: bt.JsonPatchRequest
+      example: <<patchRequestExample>>
   responses:
     204:
       description: Modified
