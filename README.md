@@ -87,7 +87,7 @@ representation of the customer, it can perform a separate GET request using the 
 Again, in a real-life scenario, the customer object can be quite large. A CS representative may need to update only a subset of the customer's attributes. If we perform the updates using the `PUT` verb, the consumer must return the full object, which is not very efficient in terms of network resources.
 
 #### Selected Solution
-Fitting with our simple requirements is a simple CRUD solution. The solution will allow clients to update particular attributes using the `PATCH` HTTP verb so that the whole `customer` resource does not need to be returned.
+Fitting with our simple requirements is a simple CRUD solution. The solution will allow clients to update particular attributes using the `PATCH` HTTP verb so that the whole `customer` resource does not need to be returned. JSON Patch is used to standardise the patch request format.
 
 #### Candidate Solutions
 Despite being very common, using `PUT` to update resources is very CRUD-like and can cause the business logic and rules to creep into the client code. An alternate approach usually referred to as "REST without PUT" requires modeling the changes to the resources as independent Process Resources. So, instead of `PUT`ing the `customer` resource to change the customer's name, a `POST` to a `customer-change-of-name` resource would initiate the change of name process. The same can be done for other kinds of updates.
