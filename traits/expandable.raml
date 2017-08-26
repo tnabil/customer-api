@@ -1,9 +1,15 @@
 #%RAML 1.0 Trait
 usage: |
   Apply this trait to a GET method (collection or member) that supports
-  expanding child collections.
+  restricting returned attributes or expanding child collections.
 
 queryParameters:
+  attributes:
+    description: |
+      A comma-separated list of attributes to include in the representation
+      of the returned entities. If not provided, all attributes are returned.
+    required: false
+    example: firstName,lastName
   expand:
     description: |
       A comma-separated list of child collection names to include in the
