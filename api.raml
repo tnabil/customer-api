@@ -8,7 +8,9 @@ baseUri: http://api.example.com/{version}
 mediaType: application/json
 protocols: HTTPS
 securedBy: basicAuth
-
+documentation:
+  - !include documentation/customer.doc.raml
+  
 uses:
   resType: resourceTypes/resourceTypes.lib.raml
   cusType: schemas/customerTypes.raml

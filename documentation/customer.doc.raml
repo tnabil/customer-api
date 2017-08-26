@@ -1,4 +1,64 @@
 #%RAML 1.0 DocumentationItem
 title: Customer API
 content: |
-  # TODO
+  The Customer API can be used to list, search, create and update customers and
+  their addresses.
+
+  **Search**
+
+  Searching is done against the customers collection by specifying a list of
+  search terms, some examples are:
+  - firstName=John
+  - firstName=J*,lastName=Doe
+
+  **Pagination**
+
+  When listing or searching for customers, the results are paginated. The number
+  of returned items can be controlled using the "pageSize" query parameter.
+
+  **Syncing**
+
+  Maintaining a copy of all customers can be achieved in two steps. Firstly, the
+  consumer needs to perform an initial load of all customers available as of a
+  given point in time. We'll call this step "Bootstrapping". Subsequently, the
+  consumer needs to periodically retrieve customers that have been created or
+  modified since the last run.
+
+  - **Bootstrapping**
+
+      In this step the consumer will paginate through all the customer records,
+      which will require as many iterations as the number of customers in the
+      system divided by the maximum page size. Whenever the consumer retrieves
+      a page of customers, the response will contain the "Last-Modified" header.
+      This header indicates the last timestamp at which the collection was
+      modified. As the consumer goes through the pages after the first, changes to
+      previously retrieved pages could be occurring. Hence, when the consumer
+      starts the bootstrapping process by retrieving the first page, the value
+      of the "Last-Modified" header needs to be noted and saved. This value will
+      need to be used when the consumer is retrieving changes to the collection
+      that occurred since the start of the bootstrapping process.
+
+  - **Periodic Updates**
+
+    As frequently as is convenient for the consumer, the above process needs to
+    be repeated except that the "since" query parameter will be used with the value
+    of the "Last-Modified" timestamp returned when the first page of customers
+    was retireved. This value was saved during the bootstrapping process. In this
+    case the service will only return customers that have been created or
+    updated since that timestamp. This will include customers created or updated
+    during the bootstrapping process that were not picked up as they would have
+    appeared in pages already consumed. With every periodic update, the consumer
+    needs to note the value of the "Last-Modified" header returned with the
+    first page as this value will be used for the "since" parameter during the
+    next periodic update.
+
+  While syncing customers, it is recommended that the consumer expands the child
+  collections of a customer (e.g. addresses) rather than performing a separate
+  request to retreive these. This can be done using the "exapand" query paramter.
+
+  **Updating a Customer**
+  The API allows for updating the customer by replacing the whole resource using
+  the PUT method. In most cases, however, the consumer will want to modify only
+  certain attributes of the customer such as their phone number, which is best
+  done using the PATCH method which follows the JSON Patch syntax. The API also
+  allows for adding, modifying or deleting customer addresses.
