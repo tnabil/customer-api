@@ -24,6 +24,14 @@ get:
           type: bt.Error
           example: !include ../examples/error.raml
 put?:
+  headers:
+    If-Match:
+      description: |
+        Causes the PUT request to be processed only if the ETag of
+        the resource matches the value of the header.
+      required: false
+      type: string
+      example: "4568"
   body:
     application/json:
       type: <<putRequestType>>
@@ -43,6 +51,12 @@ put?:
         application/json:
           type: bt.Error
           example: !include ../examples/error.raml
+    412:
+      description: Precondition Failed
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml
     500:
       description: Internal server error
       body:
@@ -52,6 +66,14 @@ put?:
 patch?:
   description: |
     Modify part of the <<resourcePathName|!singularize>>
+  headers:
+    If-Match:
+      description: |
+        Causes the PUT request to be processed only if the ETag of
+        the resource matches the value of the header.
+      required: false
+      type: string
+      example: "4568"
   body:
     application/json:
       type: bt.JsonPatchRequest
@@ -67,6 +89,12 @@ patch?:
           example: !include ../examples/error.raml
     404:
       description: Not found
+      body:
+        application/json:
+          type: bt.Error
+          example: !include ../examples/error.raml
+    412:
+      description: Precondition Failed
       body:
         application/json:
           type: bt.Error
